@@ -15,6 +15,8 @@ using std::cout;
 
 static long long guessCount = 0; 
 
+
+
 /*modified version of GeeksForGeeks approach:*/
 /*a recursive function
 complexity is stringLength^characterSetSize 
@@ -25,14 +27,15 @@ void printAllString_OfGivenLength_WithGivenCharSet
     int characterSetSize, int stringLength, 
     const string& correctPassword)
 {
-
+    //******
     guessCount++; 
 
     if (stringLength == 0)
     {
-        //if (guessCount % 2'000'000 == 0)
+        //only display every 50,000 guesses - for "long" passwords 
+        //if (guessCount % 50'000 == 0)
         //{
-        //    cout << outputString << "\n";
+            cout << outputString << "\n"; 
 
         //}
 
@@ -63,22 +66,31 @@ void printAllString_OfGivenLength_WithGivenCharSet
 }
 int main()
 {
+
+    //std::locale l("");
+    //cout.imbue(l);
+
+    //cout << LLONG_MAX << "\n";
+
+
     //vector<char> firstFourLetters = { 'a', 'b', 'c', 'd' }; 
     vector<char> lowercaseLetters; 
-    for (char i = 'a'; i <= 'd'; i++)
+    
+    //small test case: 
+    //for (char i = 'a'; i <= 'd'; i++)
+    //{
+    //    lowercaseLetters.push_back(i); 
+    //}
+
+    for (char i = 'a'; i <= 'z'; i++)
     {
         lowercaseLetters.push_back(i); 
     }
-
-    //for (char i = 'a'; i <= 'z'; i++)
-    //{
-    //    lowercaseLetters.push_back(i); 
-    //}
     //add characters 0 - 9
-    //for (char i = '0'; i <= '9'; i++)
-    //{
-    //    lowercaseLetters.push_back(i); 
-    //}
+    for (char i = '0'; i <= '9'; i++)
+    {
+        lowercaseLetters.push_back(i); 
+    }
 
 
     //std::next_permutation(firstFourLetters.begin(), firstFourLetters.end());
@@ -101,13 +113,14 @@ int main()
         correctPassword.length(), correctPassword); 
 
 
-    //the "dumb" approach -> nested for loops
+    //the "dumb" approach -> nested for loops 
+    //LIMITED to 4 chars 
     for (char i = 'a'; i <= 'z'; i++)
     {
         std::string guessedPassword = "____"; //assumes known-length password 
         
         guessedPassword[0] = i;
-
+        //O(N^M) -> N is the password length and M is the number of allowed characters
 
         for (int j = 'a'; j <= 'z'; j++)
         {
